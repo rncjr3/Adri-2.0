@@ -1,9 +1,16 @@
 package frc.robot;
+import edu.wpi.first.math.util.Units;
 
 public class Constants {
     // Get this distance in meters, convert it.
-    public static final double DRIVETRAIN_TRACKWIDTH_METERS = 0.2794;/// distance from left wheels to right wheels
-    public static final double DRIVETRAIN_WHEELBASE_METERS = 0.2794;// distance from front motors to back motors
+    //public static final double DRIVETRAIN_TRACKWIDTH_METERS = 0.2794;/// distance from left wheels to right wheels
+    //public static final double DRIVETRAIN_WHEELBASE_METERS = 0.2794;// distance from front motors to back motors
+
+    // Change the decimal numbers here to inches. If the distance between the wheels is 40 inches, 
+    // then type a 40 in place of the '0.2794'. If the distance is 40 and a half inches, type it
+    // in as 40.5.
+    public static final double DRIVETRAIN_TRACKWIDTH_METERS = Units.inchesToMeters(0.2794);
+    public static final double DRIVETRAIN_WHEELBASE_METERS = Units.inchesToMeters(0.2794);
 
     public static final int DRIVETRAIN_PIGEON_ID = 0;// don't need this, but if we get one, we need to assign it an ID
 
