@@ -35,11 +35,16 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the trigger bindings
 
+
+    // We multiply by 0.25 to slow down the speed of the wheels. Mess with the number
+    // to get the speed we want. 
+    // There was no previous value that we multiplied by, if you want to set
+    // it back to stock settings.
     driveTrain.setDefaultCommand(new DriveCommand(
       driveTrain,
-      () -> -modifyAxis(controller.getLeftY()), // Axis are flipped here on purpose
-      () -> -modifyAxis(controller.getLeftX()),
-      () -> -modifyAxis(controller.getRightX())
+      () -> -modifyAxis(controller.getLeftY() * 0.25), // Axis are flipped here on purpose
+      () -> -modifyAxis(controller.getLeftX() * 0.25),
+      () -> -modifyAxis(controller.getRightX() * 0.25)
     ));
 
     configureBindings();
@@ -57,9 +62,12 @@ public class RobotContainer {
     }
   }
 
+  // Change the value of deadband in the parenthesis to increase the deadzone
+  // A number between 0 and 1, bigger number should mean bigger deadzone
+  // Original value was 0.05
   private static double modifyAxis(double value) {
     // Deadband
-    value = deadband(value, 0.05);
+    value = deadband(value, 0.2);
 
     // Square the axis
     value = Math.copySign(value * value, value);
