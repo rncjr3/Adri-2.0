@@ -4,15 +4,18 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.DrivetrainSubsystem;
 import edu.wpi.first.wpilibj.XboxController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.*;
 import com.ctre.phoenix.motorcontrol.can.*;
 import com.ctre.phoenix.sensors.*;
+import edu.wpi.first.wpilibj.Timer;
 //import com.swervedrivespecialties.swervelib.MK4iSwerveModule; // Not sure how to get this library imported, or if I need a different one
 
 /**
@@ -25,6 +28,13 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
+  private final DrivetrainSubsystem autoTrain = new DrivetrainSubsystem();
+  private ChassisSpeeds chassisSpeeds1 = new ChassisSpeeds(0.5, 0.0, 0.0);
+  private ChassisSpeeds chassisSpeeds2 = new ChassisSpeeds(0.0, 0.0, 0.0);
+  Timer timer;
+
+  
+
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -35,6 +45,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    timer = new Timer();
   }
 
   /**
@@ -63,17 +74,27 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
+    timer.reset();
+    timer.start();
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
+
   }
 
   /** This function is called periodically during autonomous. */
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+    if(timer.get() < 1.0){
+      autoTrain.drive(chassisSpeeds1);
+    } 
+    else{
+      autoTrain.drive(chassisSpeeds2);
+    }
+  }
 
   @Override
   public void teleopInit() {

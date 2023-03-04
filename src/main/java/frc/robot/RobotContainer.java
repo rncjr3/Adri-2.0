@@ -42,9 +42,9 @@ public class RobotContainer {
     // it back to stock settings.
     driveTrain.setDefaultCommand(new DriveCommand(
       driveTrain,
-      () -> -modifyAxis(controller.getLeftY() * 0.25), // Axis are flipped here on purpose
-      () -> -modifyAxis(controller.getLeftX() * 0.25),
-      () -> -modifyAxis(controller.getRightX() * 0.25)
+      () -> -modifyAxis(controller.getLeftY() * 0.50), // Axis are flipped here on purpose
+      () -> -modifyAxis(controller.getLeftX() * 0.50),
+      () -> -modifyAxis(controller.getRightX() * 0.50)
     ));
 
     configureBindings();
@@ -67,7 +67,7 @@ public class RobotContainer {
   // Original value was 0.05
   private static double modifyAxis(double value) {
     // Deadband
-    value = deadband(value, 0.2);
+    value = deadband(value, 0.1);
 
     // Square the axis
     value = Math.copySign(value * value, value);
@@ -92,6 +92,7 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     //m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+    
   }
 
   /**
@@ -104,4 +105,5 @@ public class RobotContainer {
     
     return Autos.exampleAuto(m_exampleSubsystem);
   }
+
 }
