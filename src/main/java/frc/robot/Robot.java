@@ -28,10 +28,6 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
-  private final DrivetrainSubsystem autoTrain = new DrivetrainSubsystem();
-  private ChassisSpeeds chassisSpeeds1 = new ChassisSpeeds(0.5, 0.0, 0.0);
-  private ChassisSpeeds chassisSpeeds2 = new ChassisSpeeds(0.0, 0.0, 0.0);
-  Timer timer;
 
   
 
@@ -45,7 +41,6 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-    timer = new Timer();
   }
 
   /**
@@ -74,8 +69,6 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-    timer.reset();
-    timer.start();
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
@@ -87,14 +80,7 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during autonomous. */
   @Override
-  public void autonomousPeriodic() {
-    if(timer.get() < 1.0){
-      autoTrain.drive(chassisSpeeds1);
-    } 
-    else{
-      autoTrain.drive(chassisSpeeds2);
-    }
-  }
+  public void autonomousPeriodic() {}
 
   @Override
   public void teleopInit() {
