@@ -28,9 +28,10 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
-  private final DrivetrainSubsystem autoTrain = new DrivetrainSubsystem();
-  private ChassisSpeeds chassisSpeeds1 = new ChassisSpeeds(0.5, 0.0, 0.0);
-  private ChassisSpeeds chassisSpeeds2 = new ChassisSpeeds(0.0, 0.0, 0.0);
+  //private final DrivetrainSubsystem autoTrain = new DrivetrainSubsystem();
+  //private ChassisSpeeds chassisSpeeds1 = new ChassisSpeeds(0.5, 0.0, 0.0);
+  //private ChassisSpeeds chassisSpeeds2 = new ChassisSpeeds(0.0, 0.0, 0.0);
+  // We created a timer to use for autonomous
   Timer timer;
 
   
@@ -45,6 +46,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    // The timer has been instatiated.
     timer = new Timer();
   }
 
@@ -74,6 +76,8 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
+    // We are reseting the timer to start at 0, then starting it to begin counting so we can move the
+    // the robot for 1 second.
     timer.reset();
     timer.start();
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
@@ -88,11 +92,16 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
+    // The timer was set to 0. As long as the timer is under 1 second, this should move the robot
+    // at half speed forward for 1 second, or close to it. We are just testing to see if it moves
+    // at all. We can add more functionality if we can get it to work.
+    // The autoMove() and autoStop() are called so we can use the existing driveTrain we have,
+    // because creating a new one causes an error where we are trying to reuse the CANCoder ID's.
     if(timer.get() < 1.0){
-      autoTrain.drive(chassisSpeeds1);
+      m_robotContainer.autoMove();
     } 
     else{
-      autoTrain.drive(chassisSpeeds2);
+      m_robotContainer.autoStop();
     }
   }
 

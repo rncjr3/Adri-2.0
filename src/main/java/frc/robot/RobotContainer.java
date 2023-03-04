@@ -10,6 +10,7 @@ import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -26,6 +27,10 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final DrivetrainSubsystem driveTrain = new DrivetrainSubsystem();
   private final XboxController controller = new XboxController(0);
+  // These 2 ChassisSpeeds are used to move the robot at half speed, and stop the robot, hopefully.
+  // 1 moves the robot, 2 stops the robot. They are used in the autoStart() and autoStop() methods.
+  private ChassisSpeeds chassisSpeeds1 = new ChassisSpeeds(0.5, 0.0, 0.0);
+  private ChassisSpeeds chassisSpeeds2 = new ChassisSpeeds(0.0, 0.0, 0.0);
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   //private final CommandXboxController m_driverController =
@@ -36,7 +41,7 @@ public class RobotContainer {
     // Configure the trigger bindings
 
 
-    // We multiply by 0.25 to slow down the speed of the wheels. Mess with the number
+    // We multiply by 0.50 to slow down the speed of the wheels. Mess with the number
     // to get the speed we want. 
     // There was no previous value that we multiplied by, if you want to set
     // it back to stock settings.
@@ -106,4 +111,15 @@ public class RobotContainer {
     return Autos.exampleAuto(m_exampleSubsystem);
   }
 
+  // This method is called by autonomousPeriodic(). It sets the chassisSpeed to half of max,
+  // and hopefully moves it forward. It should move for about 1 second, or close to it.
+  public void autoMove(){
+    driveTrain.drive(chassisSpeeds1);
+  }
+
+  // This method is called by autonomousPeriodic(). It sets the chassisSpeed to 0,
+  // and hopefully stops the robot.
+  public void autoStop(){
+    driveTrain.drive(chassisSpeeds2);
+  }
 }
