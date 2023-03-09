@@ -28,14 +28,11 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
-<<<<<<< HEAD
   //private final DrivetrainSubsystem autoTrain = new DrivetrainSubsystem();
   //private ChassisSpeeds chassisSpeeds1 = new ChassisSpeeds(0.5, 0.0, 0.0);
   //private ChassisSpeeds chassisSpeeds2 = new ChassisSpeeds(0.0, 0.0, 0.0);
   // We created a timer to use for autonomous
   Timer timer;
-=======
->>>>>>> 9c3f16efa5a7ca68e4e6291a470842eb0f8395f8
 
   
 
@@ -49,11 +46,8 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-<<<<<<< HEAD
     // The timer has been instatiated.
     timer = new Timer();
-=======
->>>>>>> 9c3f16efa5a7ca68e4e6291a470842eb0f8395f8
   }
 
   /**
@@ -82,13 +76,10 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-<<<<<<< HEAD
     // We are reseting the timer to start at 0, then starting it to begin counting so we can move the
-    // the robot for 1 second.
+    //
     timer.reset();
     timer.start();
-=======
->>>>>>> 9c3f16efa5a7ca68e4e6291a470842eb0f8395f8
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
@@ -100,7 +91,6 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during autonomous. */
   @Override
-<<<<<<< HEAD
   public void autonomousPeriodic() {
     // The timer was set to 0. As long as the timer is under 1 second, this should move the robot
     // at half speed forward for 1 second, or close to it. We are just testing to see if it moves
@@ -114,9 +104,6 @@ public class Robot extends TimedRobot {
       m_robotContainer.autoStop();
     }
   }
-=======
-  public void autonomousPeriodic() {}
->>>>>>> 9c3f16efa5a7ca68e4e6291a470842eb0f8395f8
 
   @Override
   public void teleopInit() {

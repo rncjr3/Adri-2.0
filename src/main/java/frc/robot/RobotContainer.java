@@ -29,7 +29,7 @@ public class RobotContainer {
   private final XboxController controller = new XboxController(0);
   // These 2 ChassisSpeeds are used to move the robot at half speed, and stop the robot, hopefully.
   // 1 moves the robot, 2 stops the robot. They are used in the autoStart() and autoStop() methods.
-  private ChassisSpeeds chassisSpeeds1 = new ChassisSpeeds(0.5, 0.0, 0.0);
+  private ChassisSpeeds chassisSpeeds1 = new ChassisSpeeds(1.0, 0.0, 0.0);
   private ChassisSpeeds chassisSpeeds2 = new ChassisSpeeds(0.0, 0.0, 0.0);
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -47,9 +47,9 @@ public class RobotContainer {
     // it back to stock settings.
     driveTrain.setDefaultCommand(new DriveCommand(
       driveTrain,
-      () -> -modifyAxis(controller.getLeftY() * 0.50), // Axis are flipped here on purpose
-      () -> -modifyAxis(controller.getLeftX() * 0.50),
-      () -> -modifyAxis(controller.getRightX() * 0.50)
+      () -> -modifyAxis(controller.getLeftY() * 0.75), // Axis are flipped here on purpose
+      () -> -modifyAxis(controller.getLeftX() * 0.75),
+      () -> -modifyAxis(controller.getRightX() * 0.75)
     ));
 
     configureBindings();
