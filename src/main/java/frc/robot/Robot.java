@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -33,7 +34,7 @@ public class Robot extends TimedRobot {
   //private ChassisSpeeds chassisSpeeds2 = new ChassisSpeeds(0.0, 0.0, 0.0);
   // We created a timer to use for autonomous
   Timer timer;
-
+  AnalogGyro Gyro;
 
   
 
@@ -49,6 +50,8 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
     // The timer has been instatiated.
     timer = new Timer();
+    Gyro = new AnalogGyro(0);
+    Gyro.initGyro();
 
   }
 
@@ -82,6 +85,7 @@ public class Robot extends TimedRobot {
     //
     timer.reset();
     timer.start();
+    Gyro.calibrate();
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
@@ -91,6 +95,7 @@ public class Robot extends TimedRobot {
 
   }
 
+  private boolean balance = false;
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
@@ -99,13 +104,30 @@ public class Robot extends TimedRobot {
     // at all. We can add more functionality if we can get it to work.
     // The autoMove() and autoStop() are called so we can use the existing driveTrain we have,
     // because creating a new one causes an error where we are trying to reuse the CANCoder ID's.
-    if(timer.get() < 1.0){
+    if(balance == false){
+    if(timer.get() < 1.5){
       m_robotContainer.autoMove();
     } 
+    else if(timer.get() > 2.0 && timer.get() < 4.0){
+      m_robotContainer.autoBack();
+    }
     else{
       m_robotContainer.autoStop();
     }
+    }
+    else{
+      if(timer.get() < 1.5){
+        m_robotContainer.autoMove();
+      } 
+      else if(timer.get() > 2.0 && timer.get() < 6.0){
+        m_robotContainer.autoBack();
+      }
+      else{
+        m_robotContainer.autoStop();
+      }
+    }
   }
+  
 
   @Override
   public void teleopInit() {
