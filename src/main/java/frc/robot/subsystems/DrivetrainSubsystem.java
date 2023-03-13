@@ -17,12 +17,21 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import com.swervedrivespecialties.swervelib.Mk4ModuleConfiguration;
 
 public class DrivetrainSubsystem extends SubsystemBase {
-    private static final double MAX_VOLTAGE = 12.0;
+    private static final double MAX_VOLTAGE = 10.0;
     public static final double MAX_VELOCITY_METERS_PER_SECOND = 4.14528;
     public static final double MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = MAX_VELOCITY_METERS_PER_SECOND /
             Math.hypot(Constants.DRIVETRAIN_TRACKWIDTH_METERS / 2.0, Constants.DRIVETRAIN_WHEELBASE_METERS / 2.0);
+
+            public Mk4ModuleConfiguration config;
+            public void DriveCurrent(){
+                config.setSteerCurrentLimit(20.0);
+                config.setDriveCurrentLimit(50.0);
+                System.out.println(config.getDriveCurrentLimit());
+                System.out.println(config.getSteerCurrentLimit());
+            }
 
     private final SwerveModule frontLeftModule;
     private final SwerveModule frontRightModule;
@@ -44,11 +53,13 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
     public DrivetrainSubsystem() {
         ShuffleboardTab shuffleboardTab = Shuffleboard.getTab("Drivetrain");
-
+        config = new Mk4ModuleConfiguration();
+        DriveCurrent();
         frontLeftModule = Mk4iSwerveModuleHelper.createNeo(
                 shuffleboardTab.getLayout("Front Left Module", BuiltInLayouts.kList)
                         .withSize(2, 4)
                         .withPosition(0, 0),
+                        config,
                 Mk4iSwerveModuleHelper.GearRatio.L2,
                 Constants.FRONT_LEFT_MODULE_DRIVE_MOTOR,
                 Constants.FRONT_LEFT_MODULE_STEER_MOTOR,
@@ -62,6 +73,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
                 shuffleboardTab.getLayout("Front Right Module", BuiltInLayouts.kList)
                         .withSize(2, 4)
                         .withPosition(2, 0),
+                        config,
                 Mk4iSwerveModuleHelper.GearRatio.L2,
                 Constants.FRONT_RIGHT_MODULE_DRIVE_MOTOR,
                 Constants.FRONT_RIGHT_MODULE_STEER_MOTOR,
@@ -73,6 +85,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
                 shuffleboardTab.getLayout("Back Left Module", BuiltInLayouts.kList)
                         .withSize(2, 4)
                         .withPosition(4, 0),
+                        config,
                 Mk4iSwerveModuleHelper.GearRatio.L2,
                 Constants.BACK_LEFT_MODULE_DRIVE_MOTOR,
                 Constants.BACK_LEFT_MODULE_STEER_MOTOR,
@@ -84,6 +97,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
                 shuffleboardTab.getLayout("Back Right Module", BuiltInLayouts.kList)
                         .withSize(2, 4)
                         .withPosition(6, 0),
+                        config,
                 Mk4iSwerveModuleHelper.GearRatio.L2,
                 Constants.BACK_RIGHT_MODULE_DRIVE_MOTOR,
                 Constants.BACK_RIGHT_MODULE_STEER_MOTOR,
