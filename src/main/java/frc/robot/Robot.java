@@ -50,8 +50,8 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
     // The timer has been instatiated.
     timer = new Timer();
-    Gyro = new AnalogGyro(0);
-    Gyro.initGyro();
+    //Gyro = new AnalogGyro(0);
+    //Gyro.initGyro();
 
   }
 
@@ -85,7 +85,7 @@ public class Robot extends TimedRobot {
     //
     timer.reset();
     timer.start();
-    Gyro.calibrate();
+    //Gyro.calibrate();
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
@@ -104,28 +104,17 @@ public class Robot extends TimedRobot {
     // at all. We can add more functionality if we can get it to work.
     // The autoMove() and autoStop() are called so we can use the existing driveTrain we have,
     // because creating a new one causes an error where we are trying to reuse the CANCoder ID's.
-    if(balance == false){
-    if(timer.get() < 1.5){
-      m_robotContainer.autoMove();
-    } 
-    else if(timer.get() > 2.0 && timer.get() < 4.0){
-      m_robotContainer.autoBack();
-    }
-    else{
-      m_robotContainer.autoStop();
-    }
-    }
-    else{
-      if(timer.get() < 1.5){
+    
+      if(timer.get() < 1.0){
         m_robotContainer.autoMove();
       } 
-      else if(timer.get() > 2.0 && timer.get() < 6.0){
+      else if(timer.get() > 1.0 && timer.get() < 6.0){
         m_robotContainer.autoBack();
       }
       else{
         m_robotContainer.autoStop();
       }
-    }
+    
   }
   
 
