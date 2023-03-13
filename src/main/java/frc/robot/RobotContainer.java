@@ -31,7 +31,7 @@ public class RobotContainer {
   // 1 moves the robot, 2 stops the robot. They are used in the autoStart() and autoStop() methods.
   private ChassisSpeeds chassisSpeeds1 = new ChassisSpeeds(1.0, 0.0, 0.0);
   private ChassisSpeeds chassisSpeeds2 = new ChassisSpeeds(0.0, 0.0, 0.0);
-
+  private ChassisSpeeds chassisSpeeds3 = new ChassisSpeeds(-1.0, 0.0, 0.0);
   // Replace with CommandPS4Controller or CommandJoystick if needed
   //private final CommandXboxController m_driverController =
       //new CommandXboxController(OperatorConstants.kDriverControllerPort);
@@ -47,9 +47,9 @@ public class RobotContainer {
     // it back to stock settings.
     driveTrain.setDefaultCommand(new DriveCommand(
       driveTrain,
-      () -> -modifyAxis(controller.getLeftY() * 0.75), // Axis are flipped here on purpose
-      () -> -modifyAxis(controller.getLeftX() * 0.75),
-      () -> -modifyAxis(controller.getRightX() * 0.75)
+      () -> -modifyAxis(controller.getLeftY() * 0.70), // Axis are flipped here on purpose
+      () -> -modifyAxis(controller.getLeftX() * 0.70),
+      () -> -modifyAxis(controller.getRightX() * 0.70)
     ));
 
     configureBindings();
@@ -121,5 +121,11 @@ public class RobotContainer {
   // and hopefully stops the robot.
   public void autoStop(){
     driveTrain.drive(chassisSpeeds2);
+  }
+
+  //This method ia called by the autonomousPeriodic(). It sets the chassisSpeed to -1.0 for vxMeterPerSecond
+  //makes the robot move backwards
+  public void autoBack(){
+    driveTrain.drive(chassisSpeeds3);
   }
 }
